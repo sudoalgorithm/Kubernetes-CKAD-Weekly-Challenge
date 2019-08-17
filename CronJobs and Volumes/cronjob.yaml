@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  labels:
+    run: cronjob-example
+  name: cronjob-example
+spec:
+  concurrencyPolicy: Allow
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      parallelism: 2
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            run: cronjob-example
+        spec:
+          volumes:
+            - name: cronjob-vol
+              persistentVolumeClaim:
+                claimName: local-pvc
+          restartPolicy: Never
+          containers:
+          - image: bash
+            name: cronjob-example
+            resources: {}
+            command: 
+              - /bin/sh
+              - -c
+              - hostname >> /tmp/vol/storage
+            volumeMounts:
+              - name: cronjob-vol
+                mountPath: /tmp/vol
+  schedule: '*/1 * * * *'
+status: {}

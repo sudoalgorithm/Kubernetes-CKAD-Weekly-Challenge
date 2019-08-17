@@ -1,4 +1,4 @@
-#Todays Task: Pod Creation
+# Todays Task: Pod Creation
 
 - Create a pod of image bash which runs once to execute the command hostname > /tmp/hostname && sleep 30.
 
